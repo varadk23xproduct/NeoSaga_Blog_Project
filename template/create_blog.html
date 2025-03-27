@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="text-center">Create a New Blog</h2>  
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Blog Title (Top) -->
+        <div class="mb-3">
+            <label class="form-label">Blog Title</label>
+            <input type="text" name="title" class="form-control" placeholder="Enter blog title" required>
+        </div>
+
+        <!-- Image Upload (Below Title) -->
+        <div class="mb-3">
+            <label class="form-label">Upload an Image (Optional)</label>
+            <input type="file" name="image" class="form-control">
+        </div>
+
+        <!-- Blog Content (Below Image) -->
+        <div class="mb-3">
+            <label class="form-label">Write Your Blog</label>
+            <textarea name="content" class="form-control" rows="5" placeholder="Start writing..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit Blog</button>
+    </form>
+</div>
+{% endblock %}

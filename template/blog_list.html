@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2>All Blog Posts</h2>
+    <a href="/blogs/create/" class="btn btn-primary mb-3">Create New Blog</a>
+
+    {% for blog in blogs %}  <!-- Loop through all blogs -->
+    <div class="row border rounded shadow-sm p-3 mb-4 align-items-center">
+        <!-- Left Side: Blog Image -->
+        <div class="col-md-4">
+            {% if blog.image %}
+                <img src="{{ blog.image.url }}" class="img-fluid rounded" 
+                     style="max-height: 300px; width: 100%; object-fit: cover;" alt="Blog Image">
+            {% else %}
+                <img src="https://via.placeholder.com/300" class="img-fluid rounded" alt="No Image">
+            {% endif %}
+        </div>
+
+        <!-- Right Side: Blog Content -->
+        <div class="col-md-8">
+            <h3>{{ blog.title }}</h3>
+            <p><strong>By:</strong> {{ blog.author.username }} | <strong>Published:</strong> {{ blog.created_at }}</p>
+            <p>{{ blog.content|truncatewords:50 }}</p>  <!-- Show preview -->
+            <a href="{% url 'blog_detail' blog.id %}" class="btn btn-primary">Read More</a>  <!-- Link to blog details -->
+        </div>
+    </div>
+    {% empty %}
+    <p>No blogs yet. Be the first to post!</p>
+    {% endfor %}
+</div>
+{% endblock %}
